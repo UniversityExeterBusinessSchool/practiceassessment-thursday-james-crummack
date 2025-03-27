@@ -1,10 +1,10 @@
 #######################################################################################################################################################
 # 
-# Name:
-# SID:
-# Exam Date:
-# Module:
-# Github link for this assignment:  
+# Name: James Crummack
+# SID: 710026464
+# Exam Date: 27/03/2025
+# Module: BEMM458 - Programming for Business Analytics
+# Github link for this assignment:  https://github.com/UniversityExeterBusinessSchool/practiceassessment-thursday-james-crummack/edit/main/BEM458%20J%20Thursday%20session.py
 #
 # ######################################################################################################################################################
 # Instruction 1. Read the questions and instructions carefully and complete scripts.
@@ -48,9 +48,18 @@ key_comments = {
 }
 
 # Write your search code here and provide comments. 
-
-# Initialize an empty list to store (start, end) positions
+# Intitialise empty list
 my_list = []
+
+# For loop to iterate through the dictionary
+for key, comment in key_comments.items():
+    
+    start = customer_feedback.find(comment) # Find start and end position
+    end = start + len(comment) # Calculate end position
+    
+    my_list.append((start, end)) # Add the tuple of the positions to the list
+    
+print(my_list) # Print the list of tuples
 
 ##########################################################################################################################################################
 
@@ -59,18 +68,35 @@ my_list = []
 # Operating Profit Margin, Revenue per Customer, Customer Churn Rate, and Average Order Value. Use Python functions 
 # that will take the values and return the metric needed. Use the first two and last two digits of your ID number as the input values.
 
-# Insert first two digits of ID number here:
-# Insert last two digits of ID number here:
+# Insert first two digits of ID number here: 71
+# Insert last two digits of ID number here: 64
 
 # Write your code for Operating Profit Margin
+def operating_profit_margin(revenue, total_expenses):
+    profit = (revenue - total_expenses)
+    profit_margin = (profit / revenue) * 100
+    return profit_margin
 
 # Write your code for Revenue per Customer
+def revenue_per_customer(revenue, customer):
+    return (revenue / customer)
 
 # Write your code for Customer Churn Rate
+def custoner_churn_rate(total_customers, lost_customers):
+    return lost_customers / total_customers
 
 # Write your code for Average Order Value
+def average_order_value(revenue, num_orders):
+    return (revenue / num_orders)
 
 # Call your designed functions here
+
+print(operating_profit_margin(71, 64))
+print(revenue_per_customer(71, 64))
+print(custoner_churn_rate(71, 64))
+print(average_order_value(71, 64))
+
+# AI used to look up formulae for different terms.
 
 ##########################################################################################################################################################
 
@@ -97,6 +123,36 @@ Price (£)    Demand (Units)
 """
 
 # Write your code here
+import sklearn
+from sklearn.linear_model import LinearRegression
+
+model = LinearRegression() # Initialise the model
+price = [[20], [25], [30], [35], [40], [45], [50], [55], [60], [65], [70]] # Define price , as 2d array for sklearn linear regression.
+demand = [300, 280, 260, 240, 210, 190, 160, 140, 120, 100, 85] # Define demand, as a 1d array.
+
+model.fit(price, demand) # Fit the model
+
+# 1 - Price that maximises revenue
+# Optimal price = -b0 / (2 * b1), b0 is the y intercept and b1 is the coefficient.
+
+ # Extract Coefficients from the model
+b0 = model.intercept_
+b1 = model.coef_[0]
+
+# Calculate the optimal price to maximise revenue
+if b1 < 0:  # Check that demand decreases with price
+    optimal_price = -b0 / (2 * b1) # Calculate where the derivative of the revenue function is 0 (maximum)
+    print(f"The price that maximizes revenue is: {optimal_price:.2f}")
+else:
+    print("The model does not indicate a decreasing demand with price.")
+
+
+# 2 - Demand when the prive is at £52
+predicted_demand = model.predict([[52]]) # Predict the demand at price 52
+print(f"{predicted_demand[0]} is the demand when the price is set at £52") # Print statement for predicted demand at £52
+
+# Used AI to look up documentation for sklearn as I was having import issues.
+
 
 ##########################################################################################################################################################
 
@@ -106,17 +162,15 @@ import random
 import matplotlib.pyplot as plt
 
 # Generate 100 random numbers between 1 and student id number
-max-value = integer(input("Enter your Student ID: "))
+max_value = int(input("Enter your Student ID: "))
 random_numbers = [random.randint(1, max_value) for i in range(0,100)]
 
 # Plotting the numbers in a line chart
-plt.plot(random_numbers, marker='O', markercolor='green', markeredgcolor='red', linestyle='--', lable='Random Numbers', color='blue');
-plt.title(Line Chart of 100 Random Numbers)
-plt.xlabel="Index"
-plt.ylabel="Random Number"
-plt.legend('---')
+plt.plot(random_numbers, marker='o', markerfacecolor='green', markeredgecolor='red', linestyle='dashed', label='Random Numbers', color='blue')
+plt.title("Line Chart of 100 Random Numbers")
+plt.xlabel=("Index")
+plt.ylabel=("Random Number")
+plt.legend()
 plt.grid(True)
 plt.show()
-
-
 
